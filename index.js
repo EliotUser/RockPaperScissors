@@ -24,12 +24,6 @@ function playerChoice(){
     return userChoice
 }
 
-// function playRound(){
-//     for (let i = 1; i <= 3; i++) {
-//          gameRound();
-//     }
-// }
-
 function gameRound(){
 
     let userPoints = 0;
@@ -79,4 +73,4 @@ if(userPoints > machinePoints){
 }   
     
 }
-gameRound()
+// gameRound()

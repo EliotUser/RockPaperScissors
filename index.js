@@ -1,82 +1,53 @@
 
-let choices = ['rock', 'paper', 'scissors'];
+const userChoiceDisplay = document.createElement('h3')
+const computerChoiceDisplay = document.createElement('h2')
+const resultChoiceDisplay = document.createElement('h4')
 
-function getComputerChoice(){
-    let choice = Math.floor(Math.random(choices.length))
-    let rand = Math.floor(Math.random()*3)
-    let randomNum = choices[rand]
-    console.log("Computer choice is: ", randomNum);
-    return randomNum
+const gameGrid = document.getElementById('game');
+
+gameGrid.append(userChoiceDisplay, computerChoiceDisplay, resultChoiceDisplay)
+
+const choices = ['rock', 'paper', 'scissors'];
+let compChoice;
+let userChoice;
+
+const iClicked = (e) => {
+    userChoice = e.target.id;
+    userChoiceDisplay.innerHTML = 'player: '+userChoice;
+    computerChoice();
+    Results();
 }
 
-function playerChoice(){
-    let userChoice = prompt("Rock - Paper  or Scissors ?");
-
-    if(userChoice === choices[0]){
-        console.log("User choice is: ", choices[0]);
-    }else if(userChoice === choices[1]){
-        console.log("User choice is: ", choices[1]);
-    }else if(userChoice === choices[2]){
-        console.log("User choice is: ", choices[2]);
-    }else{
-        console.log('Not a choice...');
-    }
-    return userChoice
+const computerChoice = () =>{
+    const randCh = choices[Math.floor(Math.random() * choices.length)];
+    compChoice = randCh;
+    computerChoiceDisplay.innerHTML = 'Computer: ' + compChoice;
 }
 
-// function playRound(){
-//     for (let i = 1; i <= 3; i++) {
-//          gameRound();
-//     }
-// }
+for(let i = 0; i < choices.length; i++){
+    const button = document.createElement('button');
+    button.id = choices[i];
+    button.innerHTML = choices[i];
+    button.addEventListener('click', iClicked);
+    gameGrid.appendChild(button);
+}
 
-function gameRound(){
-
-    let userPoints = 0;
-    let machinePoints = 0;
-
-    for(let i = 1; i <= 3; i++){
-    let userChoice = playerChoice();
-    let randomNum = getComputerChoice();
-
-   
-    if(randomNum === userChoice){
-        console.log("Draw!");
-         userPoints += 1;
-         machinePoints += 1;
-    }
-    else if((randomNum == 'rock' && userChoice == 'paper')){
-        console.log("User Wins!");
-         userPoints += 1;
-    }
-    else if((randomNum == 'rock' && userChoice == 'scissors')){
-        console.log("Machine Wins!");
-         machinePoints += 1;
-    }
-    else if((randomNum == 'paper' && userChoice == 'rock')){
-        console.log("Machines Win!");
-         machinePoints += 1;
-    }
-    else if((randomNum == 'paper' && userChoice == 'scissors')){
-        console.log("User Wins!");
-         userPoints += 1;
-    }
-    else if(randomNum == 'scissors' && userChoice == 'rock'){
-        console.log("User Wins!");
-         userPoints += 1;
-    }
-    else if(randomNum == 'scissors' && userChoice == 'paper'){
-        console.log("Machine Win!");
-         machinePoints += 1;
+const Results = () => {
+    switch(userChoice + compChoice){
+        case 'scissorspaper':
+        case 'rockscissors':
+        case 'paperrock':
+            resultChoiceDisplay.innerHTML = "YOU WIN!"
+            break;
+        case 'paperscissors':
+        case 'scissorsrock':
+        case 'rockpaper':
+            resultChoiceDisplay.innerHTML = "YOU LOSE!"
+            break;
+        case 'scissorsscissors':
+        case 'rockrock':
+        case 'paperpaper':
+            resultChoiceDisplay.innerHTML = "DRAW!"
+            break;
     }
 }
-if(userPoints > machinePoints){
-    console.log("User Wins! User Points: ", userPoints, "\n", "Machine Points: ", machinePoints);
-}else if(userPoints == machinePoints){
-    console.log("It\'s a Draw! User Points: ", userPoints ,"\n", "Machine Points: ", machinePoints);
-}else if(machinePoints > userPoints){
-    console.log("Machine Wins!\nMachine Points: ", machinePoints, "\n", "User Points: ", userPoints);
-}   
-    
-}
-gameRound()
